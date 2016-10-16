@@ -116,13 +116,13 @@ let rl = readline.createInterface({
     output: process.stdout
 });
 
-console.log('----------------------------------------------------------------------');
-console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HTML INDEXER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-console.log('----------------------------------------------------------------------');
+console.log('-------------------------------------------------------------------------');
+console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HTML INDEXER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+console.log('-------------------------------------------------------------------------');
 if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
     console.log('');
     console.log('This will recursively walk');
-    console.log(dir);
+    console.log('>', dir);
     console.log('and remove all traces of html-index.');
     console.log('');
     rl.question('Are you sure you want to continue? (yes/no) ', answer => {
@@ -135,7 +135,7 @@ if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
 } else {
     console.log('');
     console.log('This will recursively walk');
-    console.log(dir);
+    console.log('>', dir);
     console.log('and create index.html files.');
     console.log('');
     rl.question('Are you sure you want to continue? (yes/no) ', answer => {
