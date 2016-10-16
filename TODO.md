@@ -1,7 +1,9 @@
-*Add options*
-- whether to include .dotfiles
+*Good tips @ https://developer.atlassian.com/blog/2015/11/scripting-with-node/*
+
+**Add more options:**
+- whether to include files with `.` start
 - file white list (include only) pattern
 - file black list (exclude only) pattern
 
-*Good tips here*
-https://developer.atlassian.com/blog/2015/11/scripting-with-node/
+**Add a safety check:**
+Print out target dir and ask "are you sure" before they nuke `/`
