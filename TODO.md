@@ -1,6 +1,4 @@
-*Good general tips:* 
-
-https://developer.atlassian.com/blog/2015/11/scripting-with-node/*
+*Good tips @ https://developer.atlassian.com/blog/2015/11/scripting-with-node/*
 
 
 **Add more options:**
