@@ -34,5 +34,5 @@ $ html-index ~/some/absolute/path
 
 - skips directories with existing `index.html` (and no `.html-indexed`)
 - uses `.html-indexed` to track its own changes, skips indexing if nothing has changed
-- `index.html` list won't include filenames preceded by `.` (such as ".git")
-- `index.html` list won't include "index.html"
+- `index.html` won't include filenames preceded by `.` (such as ".git")
+- `index.html` won't include "index.html"
