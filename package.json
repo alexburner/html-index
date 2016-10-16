@@ -1,0 +1,19 @@
+{
+  "name": "html-index",
+  "version": "0.0.1",
+  "description": "A command-line tool for creating simple index.html lists in a directory tree.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexburner/html-indexer.git"
+  },
+  "author": "alexburner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexburner/html-indexer/issues"
+  },
+  "homepage": "https://github.com/alexburner/html-indexer#readme",
+  "bin": {
+    "html-index": "./index.js"
+  }
+}
