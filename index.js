@@ -44,13 +44,13 @@ function walkDir(subdir='/') {
 }
 
 function makeIndex(subdir, files) {
-    if (files.includes('index.html') && !files.includes('.html-indexed')) return;
-    let alreadyHasIndex = files.includes('.html-indexed');
+    let alreadyBeenIndexed = files.includes('.html-indexed');
+    if (files.includes('index.html') && !alreadyBeenIndexed) return;
     files = files.filter(file => !file.startsWith('.') && file !== 'index.html');
     files.sort();
     files.unshift('../');
     let fingerprint = dir + subdir + JSON.stringify(files);
-    if (alreadyHasIndex) {
+    if (alreadyBeenIndexed) {
         fs.readFile(dir + subdir + '.html-indexed', 'utf8', (err, data) => {
             if (err) return console.error(err);
             if (data === fingerprint) return console.log(`~ skipped ${subdir}`);

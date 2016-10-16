@@ -3,6 +3,7 @@
 
 **Add more options:**
 
+- whether to recursively walk children
 - whether to include files with `.` start
 - file white list (include only) pattern
 - file black list (exclude only) pattern
