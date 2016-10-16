@@ -2,29 +2,34 @@
 
 'use strict';
 
+let fs = require('fs');
 let path = require('path');
 let pwd = process.env.PWD || '/';
 let arg = process.argv[2] || '';
 let dir = !path.isAbsolute(arg) ?
-    path.resolve(pwd + !arg ? '' : '/' + arg) :
+    path.resolve(pwd + (!arg ? '' : '/' + arg)) :
     path.resolve(arg)
 ;
 
-if (!dir) {
+try {
+    fs.accessSync(dir);
+}
+catch (e) {
     console.error('Error: could not resolve target path.');
-    console.error('pwd = ', pwd);
-    console.error('arg = ', arg);
-    console.error('exiting...');
-    return;
+    console.error('pwd =', pwd);
+    console.error('arg =', arg);
+    console.error('dir =', dir);
+    throw e;
 }
 
 console.log('----------------------------------------------------------------------');
 console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HTML INDEXER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 console.log('----------------------------------------------------------------------');
-console.log('target =', dir);
+console.error('pwd =', pwd);
+console.error('arg =', arg);
+console.error('dir =', dir);
 console.log('');
 
-let fs = require('fs');
 let date = new Date().toLocaleString();
 let dirname = dir.split('/').pop();
 
