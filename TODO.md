@@ -12,3 +12,8 @@
 **Add a safety check:**
 
 Print out target dir and ask "are you sure" before they nuke `/`
+
+
+**Check if path exists:**
+
+http://stackoverflow.com/a/4482701/3717556
