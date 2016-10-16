@@ -4,10 +4,27 @@
 
 let fs = require('fs');
 let path = require('path');
+let readline = require('readline');
+
+let remove = require('./remove');
+
+//
+// SETUP
+//
+
+// path arg might be displaced by --flags
+let argIndex = 2;
+process.argv.forEach((arg, i) => {
+    if (i < 2) return;
+    if (arg.startsWith('-')) argIndex++;
+})
+
+// find user's desired directory
 let pwd = process.env.PWD || '/';
-let arg = process.argv[2] || '';
+let arg = process.argv[argIndex] || '';
+if (arg.startsWith('-')) arg = '';
 let dir = !path.isAbsolute(arg) ?
-    path.resolve(pwd + (!arg ? '' : '/' + arg)) :
+    path.resolve(pwd + (arg.length ? '/' + arg : '')) :
     path.resolve(arg)
 ;
 
@@ -19,16 +36,13 @@ catch (e) {
     console.error('pwd =', pwd);
     console.error('arg =', arg);
     console.error('dir =', dir);
+    console.error('');
     throw e;
 }
 
-console.log('----------------------------------------------------------------------');
-console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HTML INDEXER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-console.log('----------------------------------------------------------------------');
-console.error('pwd =', pwd);
-console.error('arg =', arg);
-console.error('dir =', dir);
-console.log('');
+//
+// OPERATION
+//
 
 let date = new Date().toLocaleString();
 let dirname = dir.split('/').pop();
@@ -40,7 +54,7 @@ function walkDir(subdir='/') {
         files.forEach((file) => {
             fs.stat(dir + subdir + file, (err, stat) => {
                 if (err) return console.error(err);
-                if (stat && stat.isDirectory()) {
+                if (stat && stat.isDirectory() && !file.startsWith('.')) {
                     walkDir(subdir + file + '/');
                 }
             });
@@ -85,12 +99,50 @@ function writeIndex(subdir, files, fingerprint) {
     `;
     fs.writeFile(dir + subdir + 'index.html', index, err => {
         if (err) return console.error(err);
-        console.log(`✓ wrote index.html for ${subdir}`);
+        console.log(`+  wrote index.html for ${subdir}`);
         fs.writeFile(dir + subdir + '.html-indexed', fingerprint, err => {
             if (err) return console.error(err);
-            console.log(`✓✓ wrote .html-indexed for ${subdir}`);
+            console.log(`++ wrote .html-indexed for ${subdir}`);
         });
     });
 }
 
-walkDir();
+//
+// EXECUTE
+//
+
+let rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+console.log('----------------------------------------------------------------------');
+console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HTML INDEXER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+console.log('----------------------------------------------------------------------');
+if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
+    console.log('');
+    console.log('This will recursively walk');
+    console.log(dir);
+    console.log('and remove all traces of html-index.');
+    console.log('');
+    rl.question('Are you sure you want to continue? (yes/no) ', answer => {
+        rl.close();
+        if (!answer.match(/^y(es)?$/i)) return;
+        console.log('');
+        console.log('Removing...');
+        remove(dir);
+    });
+} else {
+    console.log('');
+    console.log('This will recursively walk');
+    console.log(dir);
+    console.log('and create index.html files.');
+    console.log('');
+    rl.question('Are you sure you want to continue? (yes/no) ', answer => {
+        rl.close();
+        if (!answer.match(/^y(es)?$/i)) return;
+        console.log('');
+        console.log('Indexing...');
+        walkDir();
+    });
+}

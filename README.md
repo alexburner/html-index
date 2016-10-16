@@ -28,10 +28,22 @@ $ html-index ~/some/absolute/path
 ```
 
 
+## Clean up
+
+If you want to remove generated `index.html` files, add `-rm` or `--remove`:
+```
+$ html-index -rm
+$ html-index -rm ../some/relative/path
+$ html-index -rm ~/some/absolute/path
+```
+
+
 ## Notes
 
-- recursively adds `index.html` for current directory & all subdirectories
-- skips directories with existing `index.html` (and no `.html-indexed`)
-- uses `.html-indexed` to track its own changes, skips indexing if nothing has changed
+- recursively adds `index.html` for target dir & children
+- also adds `.html-indexed` to track its own changes
+- does not overwrite pre-existing `index.html` files (by checking for `.html-indexed`)
+- does not overwrite `index.html` if nothing has changed (by checking in `.html-indexed`)
+- does not walk directories that start with `.` (such as ".git")
 - `index.html` won't include filenames preceded by `.` (such as ".git")
 - `index.html` won't include "index.html"

@@ -8,8 +8,3 @@
 - file white list (include only) pattern
 - file black list (exclude only) pattern
 - verbose/quiet mode
-
-
-**Add a safety check:**
-
-Print out target dir and ask "are you sure" before they nuke `/`
