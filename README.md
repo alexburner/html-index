@@ -28,7 +28,7 @@ $ html-index ~/some/absolute/path
 ```
 
 
-## Clean up
+## Removal
 
 If you want to remove generated `index.html` files, add `-rm` or `--remove`:
 ```
