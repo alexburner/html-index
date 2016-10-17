@@ -71,7 +71,7 @@ function makeIndex(subdir, files) {
     if (alreadyBeenIndexed) {
         fs.readFile(dir + subdir + '.html-indexed', 'utf8', (err, data) => {
             if (err) return console.error(err);
-            if (data === fingerprint) return console.log(`~ skipped ${subdir}`);
+            if (data === fingerprint) return console.log(` ~ skipped ${subdir}`);
             writeIndex(subdir, files, fingerprint);
         });
     } else {
@@ -98,7 +98,7 @@ function writeIndex(subdir, files, fingerprint) {
     `;
     fs.writeFile(dir + subdir + 'index.html', index, err => {
         if (err) return console.error(err);
-        console.log(`+  wrote index.html for ${subdir}`);
+        console.log(` + wrote index.html for ${subdir}`);
         fs.writeFile(dir + subdir + '.html-indexed', fingerprint, err => {
             if (err) return console.error(err);
             console.log(`++ wrote .html-indexed for ${subdir}`);

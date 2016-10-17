@@ -24,7 +24,7 @@ function removeIndex(subdir, files) {
     if (!files.includes('.html-indexed')) return;
     fs.unlink(dir + subdir + 'index.html', err => {
         if (err) return console.error(err);
-        console.log(`-  removed index.html for ${subdir}`);
+        console.log(` - removed index.html for ${subdir}`);
     });
     fs.unlink(dir + subdir + '.html-indexed', err => {
         if (err) return console.error(err);
