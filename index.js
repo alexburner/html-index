@@ -22,7 +22,6 @@ process.argv.forEach((arg, i) => {
 // find user's desired directory
 let pwd = process.env.PWD || '/';
 let arg = process.argv[argIndex] || '';
-if (arg.startsWith('-')) arg = '';
 let dir = !path.isAbsolute(arg) ?
     path.resolve(pwd + (arg.length ? '/' + arg : '')) :
     path.resolve(arg)
