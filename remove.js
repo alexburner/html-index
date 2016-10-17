@@ -2,25 +2,23 @@
 
 let fs = require('fs');
 
-let dir;
-
-function walkDir(subdir='/') {
+function walkDir(dir, subdir='/') {
     fs.readdir(dir + subdir, (err, files) => {
         if (err) return console.error(err);
-        removeIndex(subdir, files);
+        removeIndex(dir, subdir, files);
         files = files.filter(file => file !== 'index.html' && file !== '.html-indexed');
         files.forEach((file) => {
             fs.stat(dir + subdir + file, (err, stat) => {
                 if (err) return console.error(err);
                 if (stat && stat.isDirectory()) {
-                    walkDir(subdir + file + '/');
+                    walkDir(dir, subdir + file + '/');
                 }
             });
         });
     });
 }
 
-function removeIndex(subdir, files) {
+function removeIndex(dir, subdir, files) {
     if (!files.includes('.html-indexed')) return;
     fs.unlink(dir + subdir + 'index.html', err => {
         if (err) return console.error(err);
@@ -32,7 +30,6 @@ function removeIndex(subdir, files) {
     });
 }
 
-module.exports = target => {
-    dir = target;
-    walkDir();
+module.exports = dir => {
+    walkDir(dir);
 };
