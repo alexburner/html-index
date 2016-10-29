@@ -44,9 +44,6 @@ let rl = readline.createInterface({
     output: process.stdout
 });
 
-console.log('-------------------------------------------------------------------------');
-console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HTML INDEXER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-console.log('-------------------------------------------------------------------------');
 if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
     console.log('');
     console.log('This will recursively walk');
