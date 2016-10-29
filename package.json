@@ -1,18 +1,18 @@
 {
   "name": "html-index",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Recursively write simple index.html lists in a directory tree.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexburner/html-indexer.git"
+    "url": "git+https://github.com/alexburner/html-index.git"
   },
   "author": "alexburner",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexburner/html-indexer/issues"
+    "url": "https://github.com/alexburner/html-index/issues"
   },
-  "homepage": "https://github.com/alexburner/html-indexer#readme",
+  "homepage": "https://github.com/alexburner/html-index#readme",
   "bin": {
     "html-index": "./index.js"
   }
