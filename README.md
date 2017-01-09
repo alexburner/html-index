@@ -42,8 +42,8 @@ $ html-index -rm ~/some/absolute/path
 
 - recursively adds `index.html` for target dir & children
 - also adds `.html-indexed` to track its own changes
-- does not overwrite pre-existing `index.html` files (by checking for `.html-indexed`)
-- does not overwrite `index.html` if nothing has changed (by checking in `.html-indexed`)
+- does not overwrite pre-existing `index.html` files (by looking for `.html-indexed`)
+- does not overwrite `index.html` if nothing has changed (by looking in `.html-indexed`)
 - does not walk directories that start with `.` (such as `.git`)
-- `index.html` won't include filenames preceded by `.` (such as `.git`)
+- `index.html` won't include filenames preceded by `.` (such as `.gitignore`)
 - `index.html` won't include `index.html`
