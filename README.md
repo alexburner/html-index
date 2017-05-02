@@ -1,4 +1,4 @@
-# html-index
+# html-index `0.3.3`
 
 Walks directory tree and generates an `index.html` for any folder that doesn't already have its own.
 
@@ -55,13 +55,8 @@ $ html-index -rm ~/some/absolute/path
 - will not include `index.html` in `index.html`
 
 
-## Migration from `0.2.x`
+## Change from `0.2.x`
 
-Module no longer uses `.html-indexed` for tracking.
+Module uses `.html-index` instead of `.html-indexed` for tracking.
 
-To migrate, add `--migrate` or `-m` to your usual command
-```
-$ html-index -m
-$ html-index -m ../some/relative/path
-$ html-index -m ~/some/absolute/path
-```
+To update, use -rm to clean out the old indexes, then create fresh from scratch.

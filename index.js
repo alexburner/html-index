@@ -49,20 +49,6 @@ if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
         console.log('Removing...');
         remove(dir);
     });
-} else if (process.argv.includes('-m') || process.argv.includes('--migrate')) {
-    console.log('');
-    console.log('This will recursively walk');
-    console.log('>', dir);
-    console.log('and migrate any existing indexes.');
-    console.log('');
-    rl.question('Are you sure you want to continue? (yes/no) ', answer => {
-        rl.close();
-        if (!answer.match(/^y(es)?$/i)) return;
-        console.log('');
-        console.log('Migrating...');
-        remove(dir);
-        make(dir);
-    });
 } else {
     console.log('');
     console.log('This will recursively walk');

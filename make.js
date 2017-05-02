@@ -63,7 +63,7 @@ function writeIndex(dir, subdir, files, fingerprint) {
         console.log(` + wrote index.html for ${subdir}`);
         fs.writeFile(dir + subdir + '.html-index', fingerprint, err => {
             if (err) return console.error(err);
-            console.log(`++ wrote .html-index for ${subdir}`);
+            console.log(` + wrote .html-index for ${subdir}`);
         });
     });
 }
