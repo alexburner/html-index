@@ -1,6 +1,6 @@
 {
   "name": "html-index",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Recursively write simple index.html lists in a directory tree.",
   "main": "index.js",
   "repository": {
