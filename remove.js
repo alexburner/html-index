@@ -6,6 +6,11 @@ function walkDir(dir, subdir='/') {
     fs.readdir(dir + subdir, (err, files) => {
         if (err) return console.error(err);
         removeIndex(dir, subdir, files);
+        files = files.filter(file => (
+            file !== 'index.html' &&
+            file !== '.html-index' &&
+            file !== '.html-indexed' // legacy
+        ));
         files.forEach((file) => {
             fs.stat(dir + subdir + file, (err, stat) => {
                 if (err) return console.error(err);
