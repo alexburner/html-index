@@ -21,14 +21,14 @@ function walkDir(dir, subdir='/') {
 }
 
 function makeIndex(dir, subdir, files) {
-    let alreadyBeenIndexed = files.includes('.html-indexed');
+    let alreadyBeenIndexed = files.includes('.html-index');
     if (files.includes('index.html') && !alreadyBeenIndexed) return;
     files = files.filter(file => !file.startsWith('.') && file !== 'index.html');
     files.sort();
     files.unshift('../');
     let fingerprint = dirname + subdir + JSON.stringify(files);
     if (alreadyBeenIndexed) {
-        fs.readFile(dir + subdir + '.html-indexed', 'utf8', (err, data) => {
+        fs.readFile(dir + subdir + '.html-index', 'utf8', (err, data) => {
             if (err) return console.error(err);
             if (data === fingerprint) return console.log(` ~ skipped ${subdir}`);
             writeIndex(dir, subdir, files, fingerprint);
@@ -40,7 +40,10 @@ function makeIndex(dir, subdir, files) {
 
 function writeIndex(dir, subdir, files, fingerprint) {
     let title = `Index of ${dirname + subdir}`;
-    let list = files.map(file => `<li><a href="${file}">${file}</a></li>`).join('');
+    let list = files
+        .map(file => `<li><a href="${file}">${file}</a></li>`)
+        .join('')
+    ;
     let index = `
         <!DOCTYPE html>
         <html lang="en">
@@ -49,18 +52,18 @@ function writeIndex(dir, subdir, files, fingerprint) {
             <title>${title}</title>
         </head>
         <body>
+            <cite>Generated ${date}</cite>
             <h1>${title}</h1>
             <ul>${list}</ul>
-            <cite>Generated on ${date}</cite>
         </body>
         </html>
     `;
     fs.writeFile(dir + subdir + 'index.html', index, err => {
         if (err) return console.error(err);
         console.log(` + wrote index.html for ${subdir}`);
-        fs.writeFile(dir + subdir + '.html-indexed', fingerprint, err => {
+        fs.writeFile(dir + subdir + '.html-index', fingerprint, err => {
             if (err) return console.error(err);
-            console.log(`++ wrote .html-indexed for ${subdir}`);
+            console.log(`++ wrote .html-index for ${subdir}`);
         });
     });
 }

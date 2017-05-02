@@ -2,34 +2,26 @@
 
 'use strict';
 
-let fs = require('fs');
-let path = require('path');
-let readline = require('readline');
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
 
-let make = require('./make');
-let remove = require('./remove');
+const make = require('./make');
+const remove = require('./remove');
 
-//
-// SETUP
-//
+const flagOffset = process.argv.reduce((memo, arg, i) => {
+    if (i < 2) return memo + 1; // first two are node & file paths
+    else return arg.startsWith('-') ? memo + 1 : memo;
+}, 0);
 
-let argIndex = 2;
-process.argv.forEach((arg, i) => {
-    if (i < 2) return;
-    // path arg might be displaced by --flags
-    if (arg.startsWith('-')) argIndex++;
-})
-
-let pwd = process.env.PWD || '/';
-let arg = process.argv[argIndex] || '';
-let dir = !path.isAbsolute(arg) ?
-    path.resolve(pwd + (arg.length ? '/' + arg : '')) :
-    path.resolve(arg)
+const pathArg = process.argv[flagOffset] || '';
+const pwd = process.env.PWD || '/';
+const dir = !path.isAbsolute(pathArg) ?
+    path.resolve(pwd + (pathArg.length ? '/' + pathArg : '')) :
+    path.resolve(pathArg)
 ;
 
-try {
-    fs.accessSync(dir);
-}
+try { fs.accessSync(dir); }
 catch (e) {
     console.error('Error: could not resolve target path.');
     console.error('pwd =', pwd);
@@ -39,7 +31,7 @@ catch (e) {
     throw e;
 }
 
-let rl = readline.createInterface({
+const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
@@ -56,6 +48,20 @@ if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
         console.log('');
         console.log('Removing...');
         remove(dir);
+    });
+} else if (process.argv.includes('-m') || process.argv.includes('--migrate')) {
+    console.log('');
+    console.log('This will recursively walk');
+    console.log('>', dir);
+    console.log('and migrate any existing indexes.');
+    console.log('');
+    rl.question('Are you sure you want to continue? (yes/no) ', answer => {
+        rl.close();
+        if (!answer.match(/^y(es)?$/i)) return;
+        console.log('');
+        console.log('Migrating...');
+        remove(dir);
+        make(dir);
     });
 } else {
     console.log('');
