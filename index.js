@@ -9,24 +9,22 @@ const readline = require('readline');
 const make = require('./make');
 const remove = require('./remove');
 
-const flagOffset = process.argv.reduce((memo, arg, i) => {
-    if (i < 2) return memo + 1; // first two are node & file paths
-    else return arg.startsWith('-') ? memo + 1 : memo;
-}, 0);
-
-const pathArg = process.argv[flagOffset] || '';
-const pwd = process.env.PWD || '/';
-const dir = !path.isAbsolute(pathArg) ?
-    path.resolve(pwd + (pathArg.length ? '/' + pathArg : '')) :
-    path.resolve(pathArg)
+let pathArgIndex = 2;
+while (process.argv[pathArgIndex].startsWith('-')) pathArgIndex++;
+const pathArg = process.argv[pathArgIndex] || '';
+const workingDir = process.env.PWD || '/';
+const targetDir = path.isAbsolute(pathArg)
+    ? path.resolve(pathArg)
+    : path.resolve(workingDir + (pathArg.length ? `/${pathArg}` : ''))
 ;
 
-try { fs.accessSync(dir); }
+try { fs.accessSync(targetDir); }
 catch (e) {
     console.error('Error: could not resolve target path.');
-    console.error('pwd =', pwd);
-    console.error('arg =', arg);
-    console.error('dir =', dir);
+    console.error('argv =', process.argv);
+    console.error('pathArg =', pathArg);
+    console.error('workingDir =', workingDir);
+    console.error('targetDir =', targetDir);
     console.error('');
     throw e;
 }
@@ -39,7 +37,7 @@ const rl = readline.createInterface({
 if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
     console.log('');
     console.log('This will recursively walk');
-    console.log('>', dir);
+    console.log('>', targetDir);
     console.log('and remove all traces of html-index.');
     console.log('');
     rl.question('Are you sure you want to continue? (yes/no) ', answer => {
@@ -47,12 +45,12 @@ if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
         if (!answer.match(/^y(es)?$/i)) return;
         console.log('');
         console.log('Removing...');
-        remove(dir);
+        remove(targetDir);
     });
 } else {
     console.log('');
     console.log('This will recursively walk');
-    console.log('>', dir);
+    console.log('>', targetDir);
     console.log('and create index.html files.');
     console.log('');
     rl.question('Are you sure you want to continue? (yes/no) ', answer => {
@@ -60,6 +58,6 @@ if (process.argv.includes('-rm') || process.argv.includes('--remove')) {
         if (!answer.match(/^y(es)?$/i)) return;
         console.log('');
         console.log('Indexing...');
-        make(dir);
+        make(targetDir);
     });
 }
