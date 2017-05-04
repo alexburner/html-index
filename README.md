@@ -1,12 +1,12 @@
-# html-index `0.3.3`
+# html-index `0.3.4`
 
-Walks directory tree and generates an `index.html` for any folder that doesn't already have its own.
+Walks directory tree and generates an `index.html` for any folder that doesn't already have its own
 
-Tracks indexed folders with additional `.html-index` file.
+Tracks indexed folders with additional `.html-index` file
 
-In case you wanna be able to browse through your web-served directory trees.
+In case you wanna be able to browse through your web-served directory trees
 
-Like how it was on that ol' Apache server, before migrating to Jenkins on GitHub Pages.
+Like how it was on that ol' Apache server, before migrating to Jenkins on GitHub Pages
 
 
 ## Installation
@@ -57,6 +57,10 @@ $ html-index -rm ~/some/absolute/path
 
 ## Change from `0.2.x`
 
-Module uses `.html-index` instead of `.html-indexed` for tracking.
+Module uses `.html-index` instead of `.html-indexed` for tracking
 
-To update, use -rm to clean out the old indexes, then create fresh from scratch.
+To update, remove & re-create indexes
+```
+$ html-index path/to/project -rm
+$ html-index path/to/project
+```
