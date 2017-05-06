@@ -1,4 +1,6 @@
-# html-index `0.3.4`
+# html-index
+
+Version `0.3.5`
 
 Walks directory tree and generates an `index.html` for any folder that doesn't already have its own
 

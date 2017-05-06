@@ -10,7 +10,10 @@ const make = require('./make');
 const remove = require('./remove');
 
 let pathArgIndex = 2;
-while (process.argv[pathArgIndex].startsWith('-')) pathArgIndex++;
+while ( // shift for any --flags preceding path
+    process.argv[pathArgIndex] &&
+    process.argv[pathArgIndex].startsWith('-')
+) pathArgIndex++;
 const pathArg = process.argv[pathArgIndex] || '';
 const workingDir = process.env.PWD || '/';
 const targetDir = path.isAbsolute(pathArg)
